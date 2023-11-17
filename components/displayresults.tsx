@@ -1,4 +1,6 @@
 import { APIResponse } from '@/types';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 interface DisplayResultsProp {
@@ -6,14 +8,25 @@ interface DisplayResultsProp {
 }
 
 const DisplayResults = ({ movies }: DisplayResultsProp) => {
-    
+  const router = useRouter();
+  const { profileId } = router.query;
+
+  const handleClick = async (movie: APIResponse) => {
+    const response = await axios.post('/api/movie', { movie })
+    console.log(response);
+    if (response.status === 200) {
+      router.push(`/profile/${profileId}/watch/${response.data.id}`)
+    }
+  } 
+
     return ( 
         <div className="flex flex-wrap max-h-64 md:max-h-[40vw] overflow-y-auto justify-center items-center transition duration-100">
       {!!movies && movies?.map((item) => {
         return (
-          <div
-            key={item.id}
-            className="p-4 pb-10 relative hover:scale-[1.02] duration-300 ease-out"
+            <div
+                onClick={() => handleClick(item)}
+                key={item.id}
+                className="cursor-pointer p-4 pb-10 relative hover:scale-[1.02] duration-300 ease-out"
           >
             
               <img

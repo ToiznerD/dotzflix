@@ -16,7 +16,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
     const router = useRouter();
     const { profileId } = router.query;
     return (
-        <div className="group bg-zinc-900 col-span relative h-[234px] md:h-96">
+        <div className="group bg-zinc-900 col-span relative w-full h-[234px] md:h-96">
             <img
                 className="cursor-pointer  transition duration shadow-xl rounded-md group-hover:opacity-90 sm:group-hover:opacity-0 delay-300 w-full h-[234px] md:h-[400px]"
                 src={data.thumbnailUrl} alt="Thumbnail" />

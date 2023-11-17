@@ -11,6 +11,7 @@ import useInfoModal from '@/hooks/useInfoModal';
 import Search from '@/components/search';
 import useSearchModal from '@/hooks/useSearchModal';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
 
@@ -36,8 +37,9 @@ export default function Home() {
   const { data: favorites = [] } = useFavorites(singleProfileId ?? '');
   const { isOpen, closeModal } = useInfoModal();
   const { isOpen: isSearchOpen, closeModal: closeSearchModal } = useSearchModal();
-  
+
     
+
 
 
   return (

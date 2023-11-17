@@ -22,9 +22,8 @@ const Billboard = () => {
                 autoPlay
                 muted
                 loop
-                src={data?.videoUrl}
+                src="https://www.youtube-nocookie.com/embed/dug56u8NN7g"
                 poster={data?.thumbnailUrl}>
-                
             </video>
             <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
                 <p className="text-white text-1xl md:text-5xl h-full w-[50%] lg:text-6xl font-bold drop-shadow-xl">

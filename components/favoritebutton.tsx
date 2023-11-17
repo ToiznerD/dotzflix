@@ -1,22 +1,27 @@
 import axios from 'axios';
-import React, { useCallback, useMemo } from 'react'
-import useCurrentUser from '@/hooks/useCurrentUser'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import useFavorites from '@/hooks/useFavorites'
 import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
+import { useRouter } from 'next/router';
+import { Movie } from '@prisma/client';
 
 interface FavoriteButtonProps{
     movieId: string;
 }
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
-    const { mutate: mutateFavorites } = useFavorites();
-    const { data: currentUser, mutate } = useCurrentUser();
+    const router = useRouter();
+    const { profileId } = router.query;
+    const singleProfileId = Array.isArray(profileId) ? profileId[0] : profileId
+    const { data: favoriteIds, mutate: mutateFavorites, isLoading } = useFavorites(singleProfileId ?? '');
     
+
     const isFavorite = useMemo(() => {
-        const list = currentUser?.favoriteIds || []
+        if (!favoriteIds) return false;
+        const list = favoriteIds.map((favorite: Movie) => favorite.id);
 
         return list.includes(movieId);
-    }, [currentUser, movieId])
+    }, [favoriteIds, movieId])
 
     const Icon = isFavorite ? AiOutlineCheck : AiOutlinePlus;
 
@@ -24,20 +29,21 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
         let response;
 
         if (isFavorite) {
-            response = await axios.delete('/api/favorite', { data: { movieId } })
+            console.log('Favorite')
+            response = await axios.delete(`/api/favorite`, { data: { movieId, profileId: singleProfileId } })
+
         } else {
-            response = await axios.post('/api/favorite', { movieId })
+            console.log('Not favorite')
+            response = await axios.post(`/api/favorite`, { movieId: movieId, profileId: singleProfileId })
         }
 
-        const updatedFavoriteIds = response?.data?.favoriteIds;
-
-        mutate({
-            ...currentUser,
-            favoriteIds: updatedFavoriteIds
-        })
 
         mutateFavorites();
-    }, [movieId, isFavorite, currentUser, mutate, mutateFavorites])
+    }, [movieId, singleProfileId, isFavorite, mutateFavorites])
+
+    if (isLoading) {
+        return null;
+    }
 
     return (
         <div

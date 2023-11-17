@@ -1,8 +1,12 @@
 import { NextPageContext } from "next";
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getSession } from 'next-auth/react'
 import useCurrentUser from '../hooks/useCurrentUser'
 import { useRouter } from "next/router";
+import { AiOutlinePlus } from "react-icons/ai";
+import axios from "axios";
+import { Profile, User } from "@prisma/client";
+import { FaPlus } from 'react-icons/fa'
 
 export async function getServerSideProps(context: NextPageContext) {
     const session = await getSession(context);
@@ -19,32 +23,107 @@ export async function getServerSideProps(context: NextPageContext) {
     return {
         props: {}
     }
+
+
 }
+
+
 
 const Profiles = () => {
     const router = useRouter();
     const { data: user } = useCurrentUser()
+
+    const [profiles, setProfiles] = useState<Profile[]>([])
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [addProfile, setAddProfile] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            const userProfiles = await axios.get('/api/profiles')
+            setProfiles(userProfiles.data);
+        })()
+    }, [])
+
+    const createProfile = useCallback(async () => {
+        console.log('Creating profile')
+        const profileName = inputRef?.current?.value;
+        const profilesUpdated = await axios.post('/api/profile', { profileName, user })
+        console.log(profilesUpdated)
+        setProfiles(profilesUpdated.data);
+        setAddProfile(false);
+
+    }, [inputRef, profiles])
+
+    if (!user) {
+        // Handle the case where user is not available
+        return null
+    }
+
     return (
         <div className="flex items-center h-full justify-center">
             <div className="flex flex-col">
                 <h1 className="text-3xl md:text-6xl text-white text-center">Who is watching?</h1>
-                <div className="flex items-center justify-center gap-8 mt-10">
-                    <div onClick={() => router.push('/')}>
+                    <div className="flex flex-wrap  gap-8 mt-10">
+                   
+                        {profiles && profiles.length > 0 && (
+                            <>
+                            {profiles.map((profile: any) => (
+                                <div key={profile.id} onClick={() => router.push(`/profile/${profile.id}`)}>
+                                <div className="group flex-row w-44 mx-auto">
+                                    <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
+                                    <img src="/images/default-blue.png" alt="" />
+                                    </div>
 
-                        <div className="group flex-row w-44 mx-auto">
-                            <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
-                                <img src="/images/default-blue.png" alt="" />
+                                    <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">
+                                    {profile.name}
+                                    </div>
+                                </div>
+                                </div>
+                            ))}
+                            </>
+                    )}
+                    {addProfile ? (
+                        <div
+                            
+                            className="group flex-col w-46 mx-auto my-auto">
+                            <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent overflow-hidden">
+                            <img src="/images/default-blue.png" alt="" />
                             </div>
 
-                            <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">
-                                Dor
+                            <div className="mt-4 p-1 flex flex-col justify-center items-center gap-2  text-gray-400 text-center group-hover:text-white">
+                            <input
+                                placeholder="Profile Name"
+                                ref={inputRef}
+                                className="p-1 text-xl rounded-md w-36 mx-auto bg-neutral-800 border-gray-300 border "
+                                type="text"
+                            />
+                                <div
+                                    onClick={createProfile}
+                                    className="cursor-pointer mt-2 p-2 bg-neutral-800 h-10 w-10 border-[1px] border-gray-700 group rounded-full flex justify-center items-center">
+                                <FaPlus size={30}/>
+                            </div>
                             </div>
                         </div>
-
+                    ) : (
+                            
+                            <div
+                                onClick={() => setAddProfile(true)}
+                                className="group p-2 flex justify-center items-center flex-col w-46 text-2xl mx-auto my-auto transition cursor-pointer">
+                                <div className="flex justify-center items-center h-44 w-44">
+                                <FaPlus
+                                    className="p-2 text-neutral-800 border-2 border-gray-800 rounded-full transition bg-gray-500 group-hover:text-gray-400"
+                                        size={50} />
+                                    </div>
+                                <div className="text-gray-400 group-hover:text-white">
+                                    Add Profile
+                                    </div>
+                            </div>
+                            
+                    )}
+                        
                     </div>
                 </div>
             </div>
-        </div>
     );
 }
  

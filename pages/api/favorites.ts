@@ -10,11 +10,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-        const { currentUser } = await serverAuth(req, res);
+        const { profileId } = req.query;
+        const singleProfileId = Array.isArray(profileId) ? profileId[0] : profileId;
+        const profile = await prismadb.profile.findUnique({
+            where: {
+                id: singleProfileId
+            }
+        })
+
         const favoriteMovies = await prismadb.movie.findMany({
             where: {
                 id: {
-                    in: currentUser?.favoriteIds
+                    in: profile?.favoriteIds
                 }
             }
         })

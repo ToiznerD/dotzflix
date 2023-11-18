@@ -13,14 +13,13 @@ const DisplayResults = ({ movies }: DisplayResultsProp) => {
 
   const handleClick = async (movie: APIResponse) => {
     const response = await axios.post('/api/movie', { movie })
-    console.log(response);
     if (response.status === 200) {
       router.push(`/profile/${profileId}/watch/${response.data.id}`)
     }
   } 
 
     return ( 
-        <div className="flex flex-wrap max-h-64 md:max-h-[40vw] overflow-y-auto justify-center items-center transition duration-100">
+        <div className="flex flex-wrap max-h-64 md:max-h-[20vw] lg:max-h-[40vw] overflow-y-auto justify-center items-center transition duration-100">
       {!!movies && movies?.map((item) => {
         return (
             <div
@@ -28,12 +27,11 @@ const DisplayResults = ({ movies }: DisplayResultsProp) => {
                 key={item.id}
                 className="cursor-pointer p-4 pb-10 relative hover:scale-[1.02] duration-300 ease-out"
           >
-            
               <img
                 src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-                className={`md:w-72 md:h-96 w-40 h-[234px] object-cover`}
+                className={`lg:w-72 lg:h-96 md:w-52 md:h-72 w-40 h-[234px] object-cover`}
               ></img>
-              <div className="absolute md:w-[290px] md:h-[400px] w-40 h-[250px] top-0 flex flex-col justify-between pt-3 ">
+              <div className="absolute lg:w-72 lg:h-[400px] md:w-52 md:h-[306px] w-40 h-[255px] top-0 flex flex-col justify-between pt-3 ">
                 <div className="flex justify-end w-full">
                   <h1 className="w-20 h-10 md:mr-[1px] mt-[3px] flex justify-center items-center rounded-md rounded-r-none rounded-tl-none bg-black text-white uppercase ">
                     {item.media_type}

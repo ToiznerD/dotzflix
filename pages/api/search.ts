@@ -1,3 +1,4 @@
+import { filterMovies } from '@/lib/filter';
 import axios from 'axios';
 import { NextApiResponse, NextApiRequest } from 'next';
 
@@ -18,9 +19,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
     
     const response = await axios.get(queryUrl, options);
+    const filteredMovies = filterMovies(response.data.results);
 
-    console.log(response.data.results);
-
-    return res.status(200).json(response.data.results);
+    return res.status(200).json(filteredMovies);
     
 }

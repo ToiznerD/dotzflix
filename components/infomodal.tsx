@@ -4,6 +4,7 @@ import PlayButton from './playbutton'
 import FavoriteButton from './favoritebutton'
 import useInfoModal from '@/hooks/useInfoModal'
 import useMovie from '@/hooks/useMovie'
+import { AiOutlineLoading } from "react-icons/ai";
 
 interface InfoModalProps{
     visible?: boolean;
@@ -13,7 +14,7 @@ interface InfoModalProps{
 const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
     const [isVisible, setIsVisible] = useState(visible);
     const { movieId } = useInfoModal();
-    const { data = {} } = useMovie(movieId);
+    const { data = {}, isLoading } = useMovie(movieId);
 
     useEffect(() => {
         setIsVisible(!!visible)
@@ -35,7 +36,10 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
     return (
         <div className="z-50 transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
             <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-hidden">
-                <div className={`${isVisible ? "scale-100" : "scale-0"} transform duration-300 relative flex-auto bg-zinc-900 drop-shadow-md`}>
+                {isLoading ? (
+                    <AiOutlineLoading className="animate-spin text-white" size={30} />
+                ) : (
+                    <div className = {`${isVisible ? "scale-100" : "scale-0"} transform duration-300 relative flex-auto bg-zinc-900 drop-shadow-md`}>
                     <div className="relative h-96">
                         <video
                             className="w-full brightness-[60%] object-cover h-full"
@@ -71,7 +75,8 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
                             {data?.description}
                         </p>
                     </div>
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     )

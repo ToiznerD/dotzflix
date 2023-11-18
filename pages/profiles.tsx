@@ -69,8 +69,8 @@ const Profiles = () => {
                             <>
                             {profiles.map((profile: any) => (
                                 <div key={profile.id} onClick={() => router.push(`/profile/${profile.id}`)}>
-                                <div className="group flex-row w-44 mx-auto">
-                                    <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
+                                <div className="group flex-row lg:w-46 md:w-28 w-24 mx-auto">
+                                    <div className="lg:w-44 lg:h-44 md:w-28 md:h-28 w-24 h-24 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
                                     <img src="/images/default-blue.png" alt="" />
                                     </div>
 
@@ -85,8 +85,8 @@ const Profiles = () => {
                     {addProfile ? (
                         <div
                             
-                            className="group flex-col w-46 mx-auto my-auto">
-                            <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent overflow-hidden">
+                            className="group flex-col lg:w-46 md:w-28 w-24 mx-auto my-auto">
+                            <div className="lg:w-44 lg:h-44 md:w-28 md:h-28 w-24 h-24 rounded-md flex items-center justify-center border-2 border-transparent overflow-hidden">
                             <img src="/images/default-blue.png" alt="" />
                             </div>
 
@@ -108,8 +108,8 @@ const Profiles = () => {
                             
                             <div
                                 onClick={() => setAddProfile(true)}
-                                className="group p-2 flex justify-center items-center flex-col w-46 text-2xl mx-auto my-auto transition cursor-pointer">
-                                <div className="flex justify-center items-center h-44 w-44">
+                                className="group p-2 flex justify-center items-center flex-col lg:w-46 md:w-28 w-24 text-2xl mx-auto my-auto transition cursor-pointer">
+                                <div className="flex justify-center items-center lg:w-44 lg:h-44 md:w-28 md:h-28 w-24 h-24">
                                 <FaPlus
                                     className="p-2 text-neutral-800 border-2 border-gray-800 rounded-full transition bg-gray-500 group-hover:text-gray-400"
                                         size={50} />

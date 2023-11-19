@@ -12,7 +12,14 @@ const DisplayResults = ({ movies }: DisplayResultsProp) => {
   const { profileId } = router.query;
 
   const handleClick = async (movie: APIResponse) => {
-    const response = await axios.post('/api/movie', { movie })
+    let response;
+
+    if (movie.media_type === 'tv') {
+      response = await axios.post('/api/tv', { tv: movie })
+    } else {
+      response = await axios.post('/api/movie', { movie })
+    }
+    
     if (response.status === 200) {
       router.push(`/profile/${profileId}/watch/${response.data.id}`)
     }

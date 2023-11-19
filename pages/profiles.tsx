@@ -63,7 +63,7 @@ const Profiles = () => {
         <div className="flex items-center h-full justify-center">
             <div className="flex flex-col">
                 <h1 className="text-3xl md:text-6xl text-white text-center">Who is watching?</h1>
-                    <div className="flex flex-wrap  gap-8 mt-10">
+                    <div className="flex flex-wrap gap-8 lg:gap-20 p-3 mt-10">
                    
                         {profiles && profiles.length > 0 && (
                             <>

@@ -30,7 +30,6 @@ const TvInfoModal: React.FC<TvInfoModalProps> = ({ visible, onClose }) => {
     const { tvId } = useTvInfoModal();
     const { data = {}, isLoading } = useSeasons(tvId);
     const [season, setSeason] = useState<SeasonProps>();
-    const [episodes, SetEpisodes] = useState<React.JSX.Element[]>()
     const router = useRouter();
     const { profileId } = router.query;
     const profile = Array.isArray(profileId) ? profileId[0] : profileId;
@@ -41,6 +40,7 @@ const TvInfoModal: React.FC<TvInfoModalProps> = ({ visible, onClose }) => {
     
     const handleClose = useCallback(() => {
         setIsVisible(false);
+        setSeason(undefined)
         setTimeout(() => {
             onClose();
         }, 300)
@@ -76,7 +76,7 @@ const TvInfoModal: React.FC<TvInfoModalProps> = ({ visible, onClose }) => {
 
     return (
         <div className="z-50 transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
-            <div className="relative w-auto mx-auto max-w-4xl rounded-md overflow-hidden">
+            <div className="relative w-auto mx-auto max-w-4xl max-h-full overflow-y-auto rounded-md overflow-hidden">
                 {isLoading ? (
                     <AiOutlineLoading className="animate-spin text-white" size={30} />
                 ) : (
@@ -96,7 +96,7 @@ const TvInfoModal: React.FC<TvInfoModalProps> = ({ visible, onClose }) => {
                                     {data?.tv?.title}
                                 </p>
                                 <div className="flex flex-row gap-4 items-center">
-                                    <PlayButton movieId={data?.tv?.id} />
+                                    {/* <PlayButton movieId={data?.tv?.id} /> */}
                                     <FavoriteButton movieId={data?.tv?.id} />
                                 </div>
                             </div>
@@ -122,8 +122,11 @@ const TvInfoModal: React.FC<TvInfoModalProps> = ({ visible, onClose }) => {
                                     >{season.name}</div>
                                 ))}
                             </div>
+                            
                             {season && (
-                                <div className="flex flex-wrap overflow-y-auto max-h-[100px] text-white font-bold gap-2 p-1">
+                                <>
+                                <div className="border border-neutral-500"/>
+                                <div className="flex flex-wrap  text-white font-bold gap-2 p-1">
                                     {Array.from({ length: season.episode_count }, (_, index) => (
                                     <div
                                         key={index}
@@ -133,7 +136,8 @@ const TvInfoModal: React.FC<TvInfoModalProps> = ({ visible, onClose }) => {
                                         Episode {index + 1}
                                     </div>
                                     ))}
-                                </div>
+                                    </div>
+                                </>
                             )}
                     </div>
                 )}

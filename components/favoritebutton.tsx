@@ -7,9 +7,10 @@ import { Movie } from '@prisma/client';
 
 interface FavoriteButtonProps{
     movieId: string;
+    type?: string;
 }
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId}) => {
     const router = useRouter();
     const { profileId } = router.query;
     const singleProfileId = Array.isArray(profileId) ? profileId[0] : profileId

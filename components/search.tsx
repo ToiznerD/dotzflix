@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import MovieList from './movielist';
-import useMovieList from '@/hooks/useMovieList';
 import axios from 'axios';
 import DisplayResults from './displayresults';
 import { APIResponse } from '@/types';

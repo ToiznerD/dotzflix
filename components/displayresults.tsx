@@ -1,3 +1,6 @@
+import useInfoModal from '@/hooks/useInfoModal';
+import useSearchModal from '@/hooks/useSearchModal';
+import useTvInfoModal from '@/hooks/useTvInfoModal';
 import { APIResponse } from '@/types';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -10,6 +13,9 @@ interface DisplayResultsProp {
 const DisplayResults = ({ movies }: DisplayResultsProp) => {
   const router = useRouter();
   const { profileId } = router.query;
+  const { openModal: openMovieModal } = useInfoModal();
+  const { openModal: openTVModal } = useTvInfoModal();
+  const { closeModal } = useSearchModal();
 
   const handleClick = async (movie: APIResponse) => {
     let response;
@@ -21,7 +27,9 @@ const DisplayResults = ({ movies }: DisplayResultsProp) => {
     }
     
     if (response.status === 200) {
-      router.push(`/profile/${profileId}/watch/${response.data.id}`)
+      //movie.media_type === 'movie' ? router.push(`/profile/${profileId}/watch/${response.data.id}`) : router.push(`/profile/${profileId}/tv/${response.data.id}/1/1`)
+      movie.media_type === 'movie' ? openMovieModal(response.data.id) : openTVModal(response.data.id)
+      closeModal();
     }
   } 
 

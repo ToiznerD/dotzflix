@@ -75,7 +75,7 @@ const TvInfoModal: React.FC<TvInfoModalProps> = ({ visible, onClose }) => {
     }
 
     return (
-        <div className="z-50 transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
+        <div className="z-50 transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 p-3">
             <div className="relative w-auto mx-auto max-w-4xl max-h-full overflow-y-auto rounded-md overflow-hidden">
                 {isLoading ? (
                     <AiOutlineLoading className="animate-spin text-white" size={30} />

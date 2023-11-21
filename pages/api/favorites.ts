@@ -26,7 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         })
 
-        return res.status(200).json(favoriteMovies)
+        const favoriteTvs = await prismadb.tV.findMany({
+            where: {
+                id: {
+                    in: profile?.favoriteIds
+                }
+            }
+        })
+
+        return res.status(200).json({ favoriteMovies, favoriteTvs })
     } catch (err) {
         console.log(err);
         return res.status(400).end()

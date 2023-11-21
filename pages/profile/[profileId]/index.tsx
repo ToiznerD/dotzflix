@@ -58,7 +58,8 @@ export default function Home() {
       <div className="pb-40">
         <MovieList title="Trending Now" data={movies} />
         <TVList title="Series" data={tvs} />
-        <MovieList title="My List" data={favorites} />
+        <MovieList title="My Movie List" data={favorites.favoriteMovies} />
+        <MovieList title="My TV List" data={favorites.favoriteTvs} />
       </div>
       </>
   )

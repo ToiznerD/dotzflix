@@ -3,26 +3,27 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import useFavorites from '@/hooks/useFavorites'
 import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { Movie } from '@prisma/client';
+import { Movie, TV } from '@prisma/client';
 
 interface FavoriteButtonProps{
     movieId: string;
     type?: string;
 }
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId}) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, type}) => {
     const router = useRouter();
     const { profileId } = router.query;
     const singleProfileId = Array.isArray(profileId) ? profileId[0] : profileId
-    const { data: favoriteIds, mutate: mutateFavorites, isLoading } = useFavorites(singleProfileId ?? '');
-    
+    const { data, mutate: mutateFavorites, isLoading } = useFavorites(singleProfileId ?? '');
+
 
     const isFavorite = useMemo(() => {
-        if (!favoriteIds) return false;
-        const list = favoriteIds.map((favorite: Movie) => favorite.id);
+        if (!data) return false;
+        const moviesList = data.favoriteMovies.map((favorite: Movie) => favorite.id);
+        const tvList = data.favoriteTvs.map((favorite: TV) => favorite.id)
 
-        return list.includes(movieId);
-    }, [favoriteIds, movieId])
+        return moviesList.includes(movieId) || tvList.includes(movieId);
+    }, [data, movieId])
 
     const Icon = isFavorite ? AiOutlineCheck : AiOutlinePlus;
 
@@ -31,11 +32,11 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId}) => {
 
         if (isFavorite) {
             console.log('Favorite')
-            response = await axios.delete(`/api/favorite`, { data: { movieId, profileId: singleProfileId } })
+            response = await axios.delete(`/api/favorite`, { data: { movieId, profileId: singleProfileId, type } })
 
         } else {
             console.log('Not favorite')
-            response = await axios.post(`/api/favorite`, { movieId: movieId, profileId: singleProfileId })
+            response = await axios.post(`/api/favorite`, { movieId: movieId, profileId: singleProfileId, type })
         }
 
 

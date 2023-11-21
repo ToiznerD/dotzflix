@@ -6,18 +6,25 @@ import serverAuth from '@/lib/serverAuth'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         if (req.method === "POST") {
-            const { movieId, profileId } = req.body;
-            
-            const existingMovie = await prismadb.movie.findUnique({
-                where: {
-                    id: movieId
-                }
-            })
-
+            const { movieId, profileId, type } = req.body;
+            let existingMovie;
+            if (type === 'movie') {
+                 existingMovie = await prismadb.movie.findUnique({
+                    where: {
+                        id: movieId
+                    }
+                })
+            } else {
+                existingMovie = await prismadb.tV.findUnique({
+                    where: {
+                        id: movieId
+                    }
+                })
+            }
+           
             if (!existingMovie) {
                 throw new Error('Invalid ID');
             }
-
 
             const profile = await prismadb.profile.update({
                 where: {
@@ -45,8 +52,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             })
 
             if (!existingMovie) {
-                throw new Error('Invalid ID')
+                const existingTv = await prismadb.movie.findUnique({
+                    where: {
+                        id: movieId,
+                    }
+                })
+
+                if (!existingTv) {
+                    throw new Error('Invalid ID')
+                }
             }
+
+            
 
             const profile = await prismadb.profile.findUnique({
                 where: {

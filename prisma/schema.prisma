@@ -82,32 +82,11 @@ model Movie {
 }
 
 model TV {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
   title        String
   description  String
   thumbnailUrl String
   genre        String
   url          String
   code         String
-  season       Season[]
-  episode      Episode[]
-}
-
-model Season {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  tvId    String    @db.ObjectId
-  episode Episode[]
-  number  Int?      @db.Int
-  tv      TV        @relation(fields: [tvId], references: [id], onDelete: Cascade)
-}
-
-model Episode {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  seasonId String @db.ObjectId
-  tvId     String @db.ObjectId
-  videoUrl String
-  duration String
-  number   Int?   @db.Int
-  tv       TV     @relation(fields: [tvId], references: [id], onDelete: Cascade)
-  season   Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
 }

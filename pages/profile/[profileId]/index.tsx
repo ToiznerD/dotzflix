@@ -55,11 +55,11 @@ export default function Home() {
       <Search visible={isSearchOpen} onClose={closeSearchModal} />
       <Navbar />
       <Billboard />
-      <div className="pb-40">
+      <div className="">
         <MovieList title="Trending Now" data={movies} />
         <TVList title="Series" data={tvs} />
         <MovieList title="My Movie List" data={favorites.favoriteMovies} />
-        <MovieList title="My TV List" data={favorites.favoriteTvs} />
+        <TVList title="My TV List" data={favorites.favoriteTvs} />
       </div>
       </>
   )

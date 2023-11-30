@@ -9,9 +9,7 @@ interface TVListProps {
     title: string;
 }
 const TVList:React.FC<TVListProps> = ({ data, title }) => {
-    if (isEmpty(data)) {
-        return null;
-    }
+   
 
     const getInitialCardsToShow = () => {
         if (typeof window !== 'undefined') {
@@ -42,7 +40,10 @@ const TVList:React.FC<TVListProps> = ({ data, title }) => {
         // Update the slider value, ensuring it doesn't go beyond the maximum
         setSlider((prevSlider) => Math.min(prevSlider + 1, maxSlider));
       };
-    
+      if (isEmpty(data)) {
+        return null;
+      }
+  
     return (
         <div className="px-4 md:px-12 mt-20 py-10 space-y-8 w-full ">
           <p className="text-white text-md md:text-xl lg:text-2xl font-semibold mb-4">{title}</p>
@@ -57,7 +58,7 @@ const TVList:React.FC<TVListProps> = ({ data, title }) => {
                 {/* Present movie list for md & below screens */}
                 <div className="lg:hidden flex flex-row transition-transform duration-1000 overflow-x-auto w-full no-scrollbar" style={{ transform: `translateX(-${slider*350}px)` }}>
                   {data.map((tv) => (
-                      <div onClick={() => openModal(tv.id)}>
+                      <div key={tv.id} onClick={() => openModal(tv.id)}>
                         <TVCard key={tv.id} data={tv}/>
                       </div>
                   ))}

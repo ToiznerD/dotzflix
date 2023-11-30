@@ -29,10 +29,7 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
   const { openModal } = useInfoModal();
     const [cardsToShow, setCardsToShow] = useState(getInitialCardsToShow());
     const [slider, setSlider] = useState(0);
-    if (isEmpty(data)) {
-        return null;
-    }
-
+    
     
     const handleBackClick = () => {
         setSlider((prevSlider) => Math.max(prevSlider - 1, 0));
@@ -45,6 +42,9 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
         setSlider((prevSlider) => Math.min(prevSlider + 1, maxSlider));
       };
     
+      if (isEmpty(data)) {
+        return null;
+    }
 
     
     return (
@@ -61,7 +61,7 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
                 {/* Present movie list for md & below screens */}
                   <div className="lg:hidden flex flex-row transition-transform duration-1000 overflow-x-auto  w-full no-scrollbar" style={{ transform: `translateX(-${slider*350}px)` }}>
                       {data.map((movie) => (
-                          <div onClick={() => openModal(movie.id)}>
+                          <div key={movie.id} onClick={() => openModal(movie.id)}>
                             <MovieCard key={movie.id} data={movie}/>
                           </div>
                       ))}

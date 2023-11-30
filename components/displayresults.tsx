@@ -44,7 +44,8 @@ const DisplayResults = ({ movies }: DisplayResultsProp) => {
           >
               <img
                 src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
-                className={`lg:w-72 lg:h-96 md:w-52 md:h-72 w-40 h-[234px] object-cover`}
+              className={`lg:w-72 lg:h-96 md:w-52 md:h-72 w-40 h-[234px] object-cover`}
+              alt="poster"
               ></img>
               <div className="absolute lg:w-72 lg:h-[400px] md:w-52 md:h-[306px] w-40 h-[255px] top-0 flex flex-col justify-between pt-3 ">
                 <div className="flex justify-end w-full">

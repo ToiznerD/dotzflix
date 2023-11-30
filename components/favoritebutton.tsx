@@ -41,7 +41,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId, type}) => {
 
 
         mutateFavorites();
-    }, [movieId, singleProfileId, isFavorite, mutateFavorites])
+    }, [movieId, singleProfileId, isFavorite, mutateFavorites, type])
 
     if (isLoading) {
         return null;

@@ -52,7 +52,7 @@ const Profiles = () => {
         setProfiles(profilesUpdated.data);
         setAddProfile(false);
 
-    }, [inputRef, profiles])
+    }, [inputRef, profiles, user])
 
     if (!user) {
         // Handle the case where user is not available

@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
-import PlayButton from './playbutton'
 import FavoriteButton from './favoritebutton'
 import useTvInfoModal from '../hooks/useTvInfoModal'
 import useSeasons from '../hooks/useSeasons'
 import { AiOutlineLoading } from "react-icons/ai";
-import { Episode, Season, TV } from '@prisma/client'
 import { useRouter } from 'next/router'
 
 interface TvInfoModalProps{

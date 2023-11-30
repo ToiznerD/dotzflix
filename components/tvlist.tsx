@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { isEmpty } from 'lodash'
 import TVCard from './tvcard';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import useTvInfoModal from '@/hooks/useTvInfoModal';
 
 interface TVListProps {
     data: Record<string, any>[];
@@ -29,7 +30,7 @@ const TVList:React.FC<TVListProps> = ({ data, title }) => {
 
     const [cardsToShow, setCardsToShow] = useState(getInitialCardsToShow());
     const [slider, setSlider] = useState(0);
-
+  const { openModal } = useTvInfoModal();
 
     const handleBackClick = () => {
         setSlider((prevSlider) => Math.max(prevSlider - 1, 0));
@@ -48,23 +49,31 @@ const TVList:React.FC<TVListProps> = ({ data, title }) => {
             <div className="group/item relative ">
 
                 {/* Present movie list */}
-                    <div className="flex flex-row flex-nowrap transition-transform duration-1000" style={{ transform: `translateX(-${slider*350}px)` }}>
-                        {data.map((tv) => (
-                            <TVCard key={tv.id} data={tv}/>
-                        ))}
-                    </div>
-            <div
-              onClick={handleBackClick}
-              className="lg:group-hover/item:block hidden absolute top-[50%] -left-5 text-white -translate-y-[-50%] rounded-full opacity-80 bg-neutral-500 p-2 transition cursor-pointer hover:bg-neutral-400"
-            >
-              <IoIosArrowBack size={40} />
-            </div>
-            <div
-              onClick={handleForwardClick}
-              className="lg:group-hover/item:block hidden absolute top-[50%] -right-5 text-white -translate-y-[-50%] rounded-full opacity-80 bg-neutral-500 p-2 transition cursor-pointer hover:bg-neutral-400"
-            >
-              <IoIosArrowForward size={40} />
-            </div>
+                <div className="hidden lg:flex flex-row flex-nowrap transition-transform duration-1000" style={{ transform: `translateX(-${slider*350}px)` }}>
+                    {data.map((tv) => (
+                        <TVCard key={tv.id} data={tv}/>
+                    ))}
+                </div>
+                {/* Present movie list for md & below screens */}
+                <div className="lg:hidden flex flex-row transition-transform duration-1000 overflow-x-auto w-full no-scrollbar" style={{ transform: `translateX(-${slider*350}px)` }}>
+                  {data.map((tv) => (
+                      <div onClick={() => openModal(tv.id)}>
+                        <TVCard key={tv.id} data={tv}/>
+                      </div>
+                  ))}
+                </div>
+                <div
+                  onClick={handleBackClick}
+                  className="lg:group-hover/item:block hidden absolute top-[50%] -left-5 text-white -translate-y-[-50%] rounded-full opacity-80 bg-neutral-500 p-2 transition cursor-pointer hover:bg-neutral-400"
+                >
+                  <IoIosArrowBack size={40} />
+                </div>
+                <div
+                  onClick={handleForwardClick}
+                  className="lg:group-hover/item:block hidden absolute top-[50%] -right-5 text-white -translate-y-[-50%] rounded-full opacity-80 bg-neutral-500 p-2 transition cursor-pointer hover:bg-neutral-400"
+                >
+                  <IoIosArrowForward size={40} />
+                </div>
           </div>
         </div>
     )

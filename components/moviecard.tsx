@@ -16,7 +16,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
     const router = useRouter();
     const { profileId } = router.query;
     return (
-        <div className="group bg-zinc-900 flex flex-shrink-0 relative w-[150px] md:w-[300px] h-[234px] md:h-96 m-1">
+        <div className="group bg-zinc-900 flex flex-shrink-0 relative w-[200px] md:w-[300px] h-[234px] md:h-[400px] m-1">
             <img
                 className="cursor-pointer  transition duration shadow-xl rounded-md group-hover:opacity-90 sm:group-hover:opacity-0 delay-300  w-full"
                 src={data.thumbnailUrl} alt="Thumbnail" />
@@ -31,7 +31,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
                             onClick={() => router.push(`/profile/${profileId}/watch/${data?.id}`)}>
                             <BsFillPlayFill size={30} />
                         </div>
-                        <FavoriteButton movieId={data?.id} />
+                        <FavoriteButton movieId={data?.id} type="movie"/>
                         <div
                             onClick={() => openModal(data?.id)}
                             className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">

@@ -22,7 +22,7 @@ const TVCard: React.FC<TVCardProps> = ({
         return null;
     }
     return (
-        <div className="group bg-zinc-900 flex flex-shrink-0 relative w-[150px] md:w-[300px] h-[234px] md:h-96 m-1">
+        <div className="group bg-zinc-900 flex flex-shrink-0 relative w-[200px] md:w-[300px] h-[234px] md:h-[400px] m-1">
             <img
                 className="cursor-pointer  transition duration shadow-xl rounded-md group-hover:opacity-90 sm:group-hover:opacity-0 delay-300 w-full h-[234px] md:h-[400px]"
                 src={data.thumbnailUrl} alt="Thumbnail" />

@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 code: `${tv.id}`,
             }
         })
-        console.log(searchTV);
+
         if (searchTV.length !== 0) {
             return res.status(200).json(searchTV[0]);
         }
@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 code: `${tv.id}`,
             }
         })
-        console.log(newTv)
+
         return res.status(200).json(newTv);
     }
 }

@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await serverAuth(req, res);
 
         const { tvId } = req.query;
-        console.log(tvId)
+
         if (typeof tvId !== 'string') {
             throw new Error('Invalid ID');
         }
@@ -27,7 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         })
 
-        console.log(tv)
 
         if (!tv) {
             throw new Error('TV not found')

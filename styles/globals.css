@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-zinc-900 h-full overflow-x-hidden;
+}
+
+#__next {
+    @apply h-full;
+}
+
+html {
+    @apply h-full;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #888;
+    border-radius: 5px;
+    border-color: black;
+    /* border: 1px solid; */
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #474747;
+    border-radius: 5px;
+    border: 2px solid;
+    border-color: rgb(56, 56, 56);
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+

@@ -15,6 +15,10 @@ A video streaming platform inspired by Netflix.
 
 http://dotzflix.live/
 
+User to tryout:
+Email: dotz@gmail.com
+Password: 123123
+
 ## Getting Started
 
 1. Register via Google / GitHub / Regular register and ask Dotz to verify you as a friend.

@@ -1,5 +1,5 @@
 
-![logo](https://github.com/ToiznerD/dotzflix/assets/111242881/6d360add-e1aa-42db-ba2f-c9da0b08e3ce)
+![logo](https://github.com/ToiznerD/dotzflix/assets/111242881/75621dfc-c4ad-4c8b-b426-9ce4cf77ad8e)
 # Dotzflix
 
 A video streaming platform inspired by Netflix.

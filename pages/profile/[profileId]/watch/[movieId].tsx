@@ -13,7 +13,8 @@ const Watch = () => {
     const { movieId, profileId } = router.query;
 
     const { data } = useMovie(movieId as string);
-
+    const videoId = data?.videoUrl.split('/').pop();
+    const contentSource = data?.videoUrl.startsWith('tt') ? `imdb=${videoId}` : `tmdb=${videoId}`;
     return (
         <div className="h-screen w-screen bg-black">
             <nav className="fixed w-full p-4 z-10 flex flex-row items-center gap-8 bg-black bg-opacity-70">
@@ -31,7 +32,7 @@ const Watch = () => {
                 className="h-full w-full"
                 src={data?.videoUrl}></video> */}
             <iframe
-                src={`${data?.videoUrl}?start=300`}
+                src={`https://vidsrc.me/embed/movie?${contentSource}`}
                 width="100%"
                 height="100%"
                 allow="autoplay; encrypted-media"

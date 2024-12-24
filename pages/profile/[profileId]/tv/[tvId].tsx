@@ -14,7 +14,8 @@ const Watch = () => {
     const { tvId, profileId, season, episode } = router.query;
     console.log(tvId, profileId, season, episode);
     const { data, isLoading } = useSeasons(tvId as string);
-
+    console.log(data);
+    const contentSource = data?.tv.url.startsWith('tt') ? `imdb=${data?.tv.url}` : `tmdb=${data?.tv.url}`;
     return (
         <div className="h-screen w-screen bg-black">
             <nav className="fixed w-full p-4 z-10 flex flex-row items-center gap-8 bg-black bg-opacity-70">
@@ -35,7 +36,7 @@ const Watch = () => {
                 <AiOutlineLoading className="animate-spin text-white" size={30} />
             ) : (
                   <iframe
-                src={`https://vidsrc.to/embed/tv/${data?.tv.url}/${season}/${episode}`}
+                src={`https://vidsrc.me/embed/tv?${contentSource}&season=${season}&episode=${episode}`}
                 width="100%"
                 height="100%"
                 allow="autoplay; encrypted-media"
